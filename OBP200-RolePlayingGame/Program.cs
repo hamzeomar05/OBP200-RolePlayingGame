@@ -5,26 +5,16 @@ namespace OBP200_RolePlayingGame;
 
 class Program
 {
-    // ======= Globalt tillstånd  =======
-
-    // Spelarens "databas": alla värden som strängar
-    // index: 0 Name, 1 Class, 2 HP, 3 MaxHP, 4 ATK, 5 DEF, 6 GOLD, 7 XP, 8 LEVEL, 9 POTIONS, 10 INVENTORY (semicolon-sep)
+    
     public static Player player = new Player();
-
-    // Rum: [type, label]
-    // types: battle, treasure, shop, rest, boss
+    
     static List<Room> Rooms = new List<Room>();
-
-    // Fiendemallar: [type, name, HP, ATK, DEF, XPReward, GoldReward]
+    
     static List<Enemy> EnemyTemplates = new List<Enemy>();
-
-    // Status för kartan
+    
     static int CurrentRoomIndex = 0;
-
-    // Random
+    
     static Random Rng = new Random();
-
-    // ======= Main =======
 
     static void Main(string[] args)
     {
@@ -55,9 +45,7 @@ class Program
             Console.WriteLine();
         }
     }
-
-    // ======= Meny & Init =======
-
+    
     static void ShowMainMenu()
     {
         Console.WriteLine("=== Text-RPG ===");
@@ -98,8 +86,6 @@ class Program
                 maxhp = 40; hp = 40; atk = 7; def = 5; potions = 2; gold = 15;
                 break;
         }
-
-        // Fyll player-array
         
         player.Name = name;
         player.ClassName = cls;
@@ -114,8 +100,7 @@ class Program
         player.Inventory = new List<string>
             { "Wooden Sword", "Cloth Armor" }; // inventory som semicolon-separerad sträng
     
-
-        // Initiera karta (linjärt äventyr)
+        
         Rooms.Clear();
         Rooms.Add(new BattleRoom( "Skogsstig" ));
         Rooms.Add(new TreasureRoom("Gammal kista"));
@@ -176,11 +161,7 @@ class Program
             Console.WriteLine();
         }
     }
-
-    // ======= Rumshantering =======
     
-
-    // ======= Strid =======
 
     public static bool DoBattle(bool isBoss)
     {
@@ -302,7 +283,7 @@ class Program
         int atk = player.Attack;
         string cls = player.ClassName ?? "Warrior";
 
-        // Beräkna grundskada
+        
         int baseDmg = Math.Max(1, atk - (enemyDef / 2));
         int roll = Rng.Next(0, 3); // liten variation
 
